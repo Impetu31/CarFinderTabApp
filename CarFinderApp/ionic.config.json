@@ -1,0 +1,7 @@
+{
+  "name": "CarFinderApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

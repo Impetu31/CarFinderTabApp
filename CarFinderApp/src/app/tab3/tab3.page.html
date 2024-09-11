@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Perfil</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="reportes.length === 0">
+    <ion-card-header>
+      <ion-card-title>¡Bienvenido, {{ user.email }}!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>No tienes autos reportados aún.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngFor="let reporte of reportes">
+    <ion-card-header>
+      <ion-card-title>Auto Reportado: {{ reporte.patente }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Descripción: {{ reporte.descripcion }}</p>
+      <p *ngIf="reporte.direccion">Visto en: {{ reporte.direccion }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

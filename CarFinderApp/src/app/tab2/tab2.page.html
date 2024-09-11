@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Buscar Auto</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="buscarForm" (ngSubmit)="buscarAuto()">
+    <ion-item>
+      <ion-label>Patente</ion-label>
+      <ion-input formControlName="patente" required></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="!buscarForm.valid">Buscar</ion-button>
+  </form>
+
+  <div *ngIf="autoEncontrado">
+    <p>Este auto fue reportado como robado.</p>
+    <p>Descripción: {{ autoEncontrado.descripcion }}</p>
+  </div>
+</ion-content>
