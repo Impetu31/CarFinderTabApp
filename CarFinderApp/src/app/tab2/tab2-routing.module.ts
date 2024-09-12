@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BuscarPage } from './tab2.page';  // Cambiado a BuscarPage
+import { Routes, RouterModule } from '@angular/router';
+
+import { Tab2Page } from './tab2.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: BuscarPage,  // Cambiado a BuscarPage
+    component: Tab2Page
   }
 ];
 

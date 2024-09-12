@@ -5,7 +5,7 @@ export interface Auto {
   esPropietario: boolean;
   status: string;
   notificaciones: Notificacion[];
-  direccion?: string;  // Se añadió esta propiedad para el error
+  direccion?: string;  // Optional property for location
   userEmail: string;
 }
 

@@ -1,19 +1,19 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';  // Asegúrate de importar ReactiveFormsModule
 import { IonicModule } from '@ionic/angular';
+
 import { Tab1PageRoutingModule } from './tab1-routing.module';
-import { ReportarPage } from './tab1.page';
+import { Tab1Page } from './tab1.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,  // Asegúrate de incluir ReactiveFormsModule
     IonicModule,
     Tab1PageRoutingModule
   ],
-  declarations: [ReportarPage],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]  // Aquí está el esquema correctamente configurado
+  declarations: [Tab1Page]
 })
 export class Tab1PageModule {}

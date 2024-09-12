@@ -1,26 +1,19 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Reportar Auto</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
-    </ion-buttons>
+    <ion-title>Reportar Auto Robado</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="reportarForm" (ngSubmit)="reportarAuto()">
+  <form (ngSubmit)="reportarAuto()">
     <ion-item>
-      <ion-label>Patente</ion-label>
-      <ion-input formControlName="patente" required></ion-input>
+      <ion-label position="floating">Patente</ion-label>
+      <ion-input [(ngModel)]="nuevoAuto.patente" name="patente" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Descripción</ion-label>
-      <ion-input formControlName="descripcion" required></ion-input>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-input [(ngModel)]="nuevoAuto.descripcion" name="descripcion" required></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label>¿Eres el propietario?</ion-label>
-      <ion-checkbox formControlName="esPropietario"></ion-checkbox>
-    </ion-item>
-    <ion-button expand="block" type="submit" [disabled]="!reportarForm.valid">Reportar</ion-button>
+    <ion-button expand="full" type="submit">Reportar Auto Robado</ion-button>
   </form>
 </ion-content>

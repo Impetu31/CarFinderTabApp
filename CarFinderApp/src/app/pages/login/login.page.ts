@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/services/auth.service';
-import { Router } from '@angular/router';
+import { NavController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -14,28 +14,37 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
-  ) {}
-
-  ngOnInit() {
-    // Inicialización del formulario
+    private navCtrl: NavController,
+    private alertController: AlertController
+  ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', Validators.required]
     });
   }
 
-  login() {
-    if (this.loginForm.valid) {
-      const email = this.loginForm.value.email;
-      const password = this.loginForm.value.password;
-      const isAuthenticated = this.authService.login(email, password);
+  ngOnInit() {}
 
-      if (isAuthenticated) {
-        this.router.navigate(['/tabs/tab1']);  // Redirigir a la página tab1 si las credenciales son correctas
-      } else {
-        alert('Login fallido. Por favor verifica tus credenciales.');
-      }
+  async login() {
+    const { email, password } = this.loginForm.value;
+    
+    const loginSuccess = this.authService.login(email, password);
+
+    if (loginSuccess) {
+      const alert = await this.alertController.create({
+        header: 'Login exitoso',
+        message: 'Has iniciado sesión correctamente.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      this.navCtrl.navigateRoot('/tabs/tab1'); // Redirige a tab1 después de iniciar sesión
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'Correo o contraseña incorrectos.',
+        buttons: ['OK']
+      });
+      await alert.present();
     }
   }
 }
