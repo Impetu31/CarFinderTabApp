@@ -9,63 +9,33 @@ import { Auto } from 'src/models/auto.model';
 })
 export class Tab2Page {
   patente: string = '';
-  direccion: string = ''; // Declarar la propiedad 'direccion'
+  direccion: string = '';
   autoEncontrado: Auto | null = null;
 
-  constructor(private autoService: AutoService) { }
+  constructor(private autoService: AutoService) {}
 
   async buscarAuto() {
-    if (!this.patente) {
-      alert('Por favor, ingresa una patente.');
-      return;
-    }
+    const auto = await this.autoService.searchAutoByPatente(this.patente);
 
-    const patenteNormalizada = this.patente.toUpperCase().replace(/[AEIOU]/g, '');
-
-    // Usar 'await' para obtener el auto encontrado
-    this.autoEncontrado = await this.autoService.searchAutoByPatente(patenteNormalizada);
-
-    if (!this.autoEncontrado) {
-      alert('Auto no encontrado.');
+    if (auto) {
+      this.autoEncontrado = auto;
+    } else {
+      await this.autoService.mostrarDialogo('Error', 'No se encontró ningún auto con la patente: ' + this.patente);
     }
   }
 
-  // Método para enviar la notificación
-  enviarNotificacion() {
-    if (!this.autoEncontrado) {
-      alert('No se ha encontrado el auto para enviar la notificación.');
-      return;
+  async enviarNotificacion() {
+    if (this.autoEncontrado) {
+      this.autoService.enviarNotificacion(this.autoEncontrado, this.direccion);
+      await this.autoService.mostrarDialogo('Éxito', 'Notificación enviada al dueño del auto.');
     }
-
-    if (!this.direccion) {
-      alert('Por favor, ingresa una dirección.');
-      return;
-    }
-
-    // Crear la notificación
-    const notificacion = {
-      mensaje: `El auto con patente ${this.autoEncontrado.patente} fue visto en ${this.direccion}.`,
-      fecha: new Date(),
-    };
-
-    // Agregar la notificación al auto
-    this.autoEncontrado.notificaciones.push(notificacion);
-
-    // Actualizar el auto en el servicio
-    this.autoService.updateAuto(this.autoEncontrado);
-    alert('Notificación enviada.');
   }
 
-  // Método para manejar la selección de la imagen
-  onImageSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        console.log('Imagen seleccionada:', e.target.result); // Solo muestra la imagen en la consola
-        // Puedes manejar la imagen como necesites aquí
-      };
-      reader.readAsDataURL(file);
+  onImageSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      // Aquí puedes manejar la imagen seleccionada
     }
   }
 }

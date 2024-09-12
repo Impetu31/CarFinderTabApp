@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button> <!-- Botón para volver atrás -->
-    </ion-buttons>
     <ion-title>Perfil</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarSesion()">Cerrar Sesión</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,13 +18,21 @@
   <ion-card *ngFor="let auto of autosReportados">
     <ion-card-header>
       <ion-card-title>Auto Reportado: {{ auto.patente }}</ion-card-title>
+      <p>Status: {{ auto.status }}</p>
     </ion-card-header>
     <ion-card-content>
       <p>Descripción: {{ auto.descripcion }}</p>
-      <p>Estado: {{ auto.status }}</p> <!-- Mostrar el estado del auto -->
+      <p *ngIf="auto.direccion">Visto en: {{ auto.direccion }}</p>
       <ion-button *ngIf="auto.status === 'robado'" (click)="cambiarEstado(auto)">Marcar como Recuperado</ion-button>
+      <h3>Notificaciones:</h3>
+      <ion-list *ngIf="auto.notificaciones.length > 0">
+        <ion-item *ngFor="let notificacion of auto.notificaciones">
+          <p>{{ notificacion.mensaje }} - {{ notificacion.fecha | date:'short' }}</p>
+        </ion-item>
+      </ion-list>
+      <ion-label *ngIf="auto.notificaciones.length === 0">No hay notificaciones.</ion-label>
     </ion-card-content>
   </ion-card>
 
-  <ion-button expand="full" color="danger" (click)="borrarAutosReportados()">Borrar todos los autos reportados</ion-button> <!-- Botón para borrar autos reportados -->
+  <ion-button expand="full" (click)="eliminarAutos()">Eliminar todos los autos reportados</ion-button>
 </ion-content>

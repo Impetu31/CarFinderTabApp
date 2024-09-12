@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AutoService } from 'src/services/auto.service';
 import { Auto } from 'src/models/auto.model';
-import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab3',
@@ -12,7 +11,7 @@ export class Tab3Page implements OnInit {
   user: any;
   autosReportados: Auto[] = [];
 
-  constructor(private autoService: AutoService, private alertController: AlertController) {}
+  constructor(private autoService: AutoService) {}
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
@@ -22,22 +21,17 @@ export class Tab3Page implements OnInit {
   cambiarEstado(auto: Auto) {
     auto.status = 'recuperado';
     this.autoService.updateAuto(auto);
-    this.mostrarAlerta('Estado actualizado', 'El estado del auto ha sido cambiado a "recuperado".');
+    this.autoService.mostrarDialogo('Éxito', 'Estado del auto cambiado a "recuperado".');
   }
 
-  borrarAutosReportados() {
+  cerrarSesion() {
+    localStorage.removeItem('loggedInUser');
+    window.location.href = '/home';
+  }
+
+  eliminarAutos() {
     this.autoService.deleteAllAutosByUser(this.user.email);
     this.autosReportados = [];
-    this.mostrarAlerta('Autos eliminados', 'Todos los autos reportados han sido eliminados.');
-  }
-
-  async mostrarAlerta(titulo: string, mensaje: string) {
-    const alert = await this.alertController.create({
-      header: titulo,
-      message: mensaje,
-      buttons: ['OK']
-    });
-
-    await alert.present();
+    this.autoService.mostrarDialogo('Éxito', 'Todos los autos reportados han sido eliminados.');
   }
 }

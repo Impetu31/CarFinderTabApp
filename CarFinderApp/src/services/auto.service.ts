@@ -13,6 +13,7 @@ export class AutoService {
     this.autos = storedAutos ? JSON.parse(storedAutos) : [];
   }
 
+  // Función para agregar un auto reportado
   async addAuto(auto: Auto): Promise<boolean> {
     const patenteNormalizada = this.normalizarPatente(auto.patente);
 
@@ -24,7 +25,7 @@ export class AutoService {
     const autoExists = this.autos.find((a) => a.patente === patenteNormalizada);
     if (autoExists) {
       await this.mostrarDialogo('Error', 'Esta patente ya ha sido reportada.');
-      return false;
+      return false; // No permitir duplicados
     }
 
     auto.patente = patenteNormalizada;
@@ -33,27 +34,19 @@ export class AutoService {
     return true;
   }
 
-  getAutosByUser(userEmail: string): Auto[] {
-    return this.autos.filter((auto) => auto.userEmail === userEmail);
-  }
-
+  // Buscar un auto por patente
   async searchAutoByPatente(patente: string): Promise<Auto | null> {
     if (!patente) {
-      await this.mostrarDialogo('Error', 'Debes ingresar una patente.');
-      return null;
+      return null; // No hacer nada si no se ingresa nada
     }
 
     const patenteNormalizada = this.normalizarPatente(patente);
     const auto = this.autos.find((auto) => auto.patente === patenteNormalizada);
 
-    if (!auto) {
-      await this.mostrarDialogo('Auto no encontrado', `No se encontró ningún auto con la patente: ${patente}`);
-      return null;
-    }
-
-    return auto;
+    return auto || null;
   }
 
+  // Actualizar la información del auto (visto en algún lugar)
   updateAuto(auto: Auto): void {
     const index = this.autos.findIndex((a) => a.id === auto.id);
     if (index !== -1) {
@@ -62,26 +55,38 @@ export class AutoService {
     }
   }
 
-  deleteAuto(patente: string): void {
-    const patenteNormalizada = this.normalizarPatente(patente);
-    this.autos = this.autos.filter((auto) => auto.patente !== patenteNormalizada);
-    this.saveToLocalStorage();
+  // Obtener todos los autos reportados por un usuario específico
+  getAutosByUser(userEmail: string): Auto[] {
+    return this.autos.filter((auto) => auto.userEmail === userEmail);
   }
 
+  // Enviar notificación al dueño del auto
+  enviarNotificacion(auto: Auto, direccion: string): void {
+    auto.notificaciones.push({
+      mensaje: `El auto fue visto en: ${direccion}`,
+      fecha: new Date(),
+    });
+    this.updateAuto(auto);
+  }
+
+  // Eliminar todos los autos reportados por un usuario específico
   deleteAllAutosByUser(userEmail: string): void {
     this.autos = this.autos.filter((auto) => auto.userEmail !== userEmail);
     this.saveToLocalStorage();
   }
 
+  // Guardar los autos en el localStorage
   private saveToLocalStorage() {
     localStorage.setItem('autos', JSON.stringify(this.autos));
   }
 
+  // Normalizar la patente eliminando vocales y convirtiendo a mayúsculas
   private normalizarPatente(patente: string): string {
     return patente.toUpperCase().replace(/[AEIOU]/g, '');
   }
 
-  private async mostrarDialogo(titulo: string, mensaje: string) {
+  // Mostrar un diálogo personalizado
+  public async mostrarDialogo(titulo: string, mensaje: string) {
     const alert = await this.alertController.create({
       header: titulo,
       message: mensaje,

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AutoService } from 'src/services/auto.service';
 import { Auto } from 'src/models/auto.model';
-import { AlertController } from '@ionic/angular'; // Import AlertController
 
 @Component({
   selector: 'app-tab1',
@@ -15,12 +14,12 @@ export class Tab1Page {
     patente: '',
     descripcion: '',
     esPropietario: false,
-    status: 'robado', // Estado inicial como robado
+    status: 'robado',
     notificaciones: [],
     userEmail: '',
   };
 
-  constructor(private autoService: AutoService, private alertController: AlertController) { }
+  constructor(private autoService: AutoService) { }
 
   async reportarAuto() {
     const loggedInUser = localStorage.getItem('loggedInUser');
@@ -30,23 +29,19 @@ export class Tab1Page {
       this.nuevoAuto.id = Date.now();
 
       const patenteNormalizada = this.nuevoAuto.patente.toUpperCase().replace(/[AEIOU]/g, '');
-
-      // Verificar si la patente ya existe
       const autoEncontrado = await this.autoService.searchAutoByPatente(patenteNormalizada);
 
       if (autoEncontrado) {
-        this.mostrarAlerta('Error', 'Esta patente ya ha sido reportada.');
+        await this.autoService.mostrarDialogo('Error', 'Esta patente ya ha sido reportada.');
       } else {
-        this.nuevoAuto.patente = patenteNormalizada;
-        const resultado = await this.autoService.addAuto(this.nuevoAuto);
-
-        if (resultado) {
-          this.mostrarAlerta('Éxito', 'Auto reportado correctamente.');
+        const agregadoExitoso = await this.autoService.addAuto(this.nuevoAuto);
+        if (agregadoExitoso) {
+          await this.autoService.mostrarDialogo('Éxito', 'Auto reportado exitosamente.');
           this.limpiarFormulario();
         }
       }
     } else {
-      this.mostrarAlerta('Error', 'Debes estar logueado para reportar un auto.');
+      await this.autoService.mostrarDialogo('Error', 'Debes estar logueado para reportar un auto.');
     }
   }
 
@@ -56,19 +51,9 @@ export class Tab1Page {
       patente: '',
       descripcion: '',
       esPropietario: false,
-      status: 'robado', // Restablecer el estado a robado
+      status: 'robado',
       notificaciones: [],
       userEmail: '',
     };
-  }
-
-  async mostrarAlerta(titulo: string, mensaje: string) {
-    const alert = await this.alertController.create({
-      header: titulo,
-      message: mensaje,
-      buttons: ['OK']
-    });
-
-    await alert.present();
   }
 }
