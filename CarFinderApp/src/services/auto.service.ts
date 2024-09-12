@@ -43,6 +43,14 @@ export class AutoService {
     const patenteNormalizada = this.normalizarPatente(patente);
     const auto = this.autos.find((auto) => auto.patente === patenteNormalizada);
 
+    if (auto) {
+      // Mostrar diálogo indicando que el auto fue reportado como robado
+      await this.mostrarDialogo(
+        'Vehículo Reportado',
+        'Este vehículo fue reportado como robado. Añade información para que el dueño lo recupere.'
+      );
+    }
+
     return auto || null;
   }
 
