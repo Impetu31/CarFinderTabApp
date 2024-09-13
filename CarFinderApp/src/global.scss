@@ -35,3 +35,66 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+// Estilos Globales para la App - Opción Suave
+// Estilos Globales para la App - Opción Vibrante
+body {
+    --background: #000000; /* Fondo oscuro */
+    --ion-text-color: #FFFFFF; /* Texto blanco */
+    --ion-color-primary: #0DCAF0; /* Azul neón para títulos */
+    --ion-color-secondary: #FFC107; /* Amarillo neón para resaltar acciones */
+    --ion-color-success: #20C997; /* Verde brillante para acciones exitosas */
+    --ion-color-light: #343A40; /* Fondo oscuro */
+    --ion-color-dark: #FFFFFF; /* Texto blanco */
+  }
+  
+  // Estilos para los diálogos (Alertas)
+  ion-alert {
+    --background: var(--ion-color-light); /* Fondo oscuro */
+    --color: var(--ion-color-dark); /* Texto blanco */
+  }
+  
+  ion-alert .alert-title {
+    font-weight: bold;
+    color: var(--ion-color-primary); /* Título en azul neón */
+  }
+  
+  ion-alert .alert-message {
+    color: var(--ion-color-dark); /* Texto blanco */
+  }
+  
+  // Notificaciones en el perfil - Opción vibrante
+  ion-card-content {
+    background-color: var(--ion-color-light); /* Fondo oscuro */
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .notification-item {
+    background-color: var(--ion-color-light); /* Fondo oscuro */
+    color: var(--ion-color-dark); /* Texto blanco */
+    padding: 18px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .notification-item p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--ion-color-primary); /* Azul neón para el texto */
+  }
+  
+  .notification-empty {
+    text-align: center;
+    color: var(--ion-color-secondary); /* Amarillo neón para texto vacío */
+    font-size: 16px;
+    padding: 18px;
+  }
+  
+  .notification-list ion-item {
+    --background: var(--ion-color-light);
+    --color: var(--ion-color-dark);
+  }
+  

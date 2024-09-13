@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
         buttons: ['OK']
       });
       await alert.present();
-      this.navCtrl.navigateRoot('/tabs/tab1'); // Redirige a tab1 después de iniciar sesión
+      this.navCtrl.navigateRoot('/tabs/tab1'); 
     } else {
       const alert = await this.alertController.create({
         header: 'Error',

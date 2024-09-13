@@ -49,7 +49,7 @@ export class RegistroPage implements OnInit {
         buttons: ['OK']
       });
       await alert.present();
-      this.navCtrl.navigateRoot('/tabs/home');  // Redirigir a home después de registrarse
+      this.navCtrl.navigateRoot('/tabs/home'); 
     } else {
       const alert = await this.alertController.create({
         header: 'Error',
