@@ -35,7 +35,7 @@ export class AutoService {
   }
 
   // Buscar un auto por patente
-  async searchAutoByPatente(patente: string): Promise<Auto | null> {
+  async searchAutoByPatente(patente: string, showDialog = true): Promise<Auto | null> {
     if (!patente) {
       return null; // No hacer nada si no se ingresa nada
     }
@@ -43,7 +43,7 @@ export class AutoService {
     const patenteNormalizada = this.normalizarPatente(patente);
     const auto = this.autos.find((auto) => auto.patente === patenteNormalizada);
 
-    if (auto) {
+    if (auto && showDialog) {
       // Mostrar diálogo indicando que el auto fue reportado como robado
       await this.mostrarDialogo(
         'Vehículo Reportado',

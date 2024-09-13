@@ -29,7 +29,7 @@ export class Tab1Page {
       this.nuevoAuto.id = Date.now();
 
       const patenteNormalizada = this.nuevoAuto.patente.toUpperCase().replace(/[AEIOU]/g, '');
-      const autoEncontrado = await this.autoService.searchAutoByPatente(patenteNormalizada);
+      const autoEncontrado = await this.autoService.searchAutoByPatente(patenteNormalizada, false);
 
       if (autoEncontrado) {
         await this.autoService.mostrarDialogo('Error', 'Esta patente ya ha sido reportada.');
