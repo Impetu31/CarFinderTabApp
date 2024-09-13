@@ -1,36 +1,49 @@
+<!-- src/app/tab2/tab2.page.html -->
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button> <!-- Botón de atrás -->
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Buscar Auto Sospechoso</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label position="floating">Patente</ion-label>
-    <ion-input [(ngModel)]="patente" name="patente"></ion-input>
-  </ion-item>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Aquí buscas patentes sospechosas para brindar información en caso de que esté reportado</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Patente</ion-label>
+        <ion-input [(ngModel)]="patente" name="patente"></ion-input>
+      </ion-item>
 
-  <ion-button expand="full" (click)="buscarAuto()">Buscar Patente Sospechosa</ion-button>
+      <ion-button expand="full" (click)="buscarAuto()">
+        <ion-icon slot="start" name="search-outline"></ion-icon>
+        Buscar Patente Sospechosa
+      </ion-button>
 
-  <div *ngIf="autoEncontrado">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Auto encontrado: {{ autoEncontrado.patente }}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Descripción: {{ autoEncontrado.descripcion }}</p>
-        <ion-item>
-          <ion-label position="floating">Dirección donde fue visto</ion-label>
-          <ion-input [(ngModel)]="direccion" name="direccion"></ion-input>
-        </ion-item>
-        <input type="file" (change)="onImageSelected($event)">
-        <ion-button expand="full" (click)="enviarNotificacion()">Enviar Notificación</ion-button>
-      </ion-card-content>
-    </ion-card>
-  </div>
-  <p>Aquí puedes buscar autos sospechosos. Si identificas un auto robado, proporciona información para ayudar a su recuperación.</p>
-
+      <div *ngIf="autoEncontrado">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Auto encontrado: {{ autoEncontrado.patente }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>Descripción: {{ autoEncontrado.descripcion }}</p>
+            <ion-item>
+              <ion-label position="floating">Dirección donde fue visto</ion-label>
+              <ion-input [(ngModel)]="direccion" name="direccion"></ion-input>
+            </ion-item>
+            <input type="file" (change)="onImageSelected($event)">
+            <ion-button expand="full" (click)="enviarNotificacion()">
+              <ion-icon slot="start" name="paper-plane-outline"></ion-icon>
+              Enviar Notificación
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <p class="orientation-text">Proporciona información para ayudar a su recuperación.</p>
 </ion-content>

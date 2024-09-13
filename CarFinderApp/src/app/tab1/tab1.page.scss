@@ -1,0 +1,44 @@
+/* src/app/tab1/tab1.page.scss */
+
+ion-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 16px;
+    animation: fadeIn 0.8s ease;
+  }
+  
+  ion-button {
+    margin-top: 16px;
+    background: linear-gradient(45deg, var(--ion-color-primary), var(--ion-color-secondary));
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+  
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+  }
+  
+  .orientation-text {
+    text-align: center;
+    margin: 16px;
+    color: var(--ion-color-medium);
+    font-size: 14px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

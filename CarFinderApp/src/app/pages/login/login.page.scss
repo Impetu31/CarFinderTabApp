@@ -1,0 +1,62 @@
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Centrado vertical usando 100vh para ocupar todo el viewport */
+  background-color: #000000;
+}
+
+.login-card {
+  width: 100%; /* Asegura que ocupe todo el ancho */
+  max-width: 400px; /* Limita el ancho máximo de la tarjeta */
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.8s ease;
+}
+
+ion-item {
+  --background: transparent;
+  --border-radius: 8px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+ion-label {
+  color: #ffffff;
+}
+
+ion-input {
+  color: #ffffff;
+}
+
+ion-button {
+  --border-radius: 20px;
+  --background: #007bff;
+  --color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.forgot-password {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.forgot-password ion-label a {
+  color: #4caf50;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

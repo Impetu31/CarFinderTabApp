@@ -1,23 +1,31 @@
+<!-- src/app/tab1/tab1.page.html -->
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button> <!-- Botón de atrás -->
-    </ion-buttons>
     <ion-title>Reportar Auto Robado</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="reportarAuto()">
-    <ion-item>
-      <ion-label position="floating">Patente</ion-label>
-      <ion-input [(ngModel)]="nuevoAuto.patente" name="patente" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Descripción</ion-label>
-      <ion-input [(ngModel)]="nuevoAuto.descripcion" name="descripcion" required></ion-input>
-    </ion-item>
-    <ion-button expand="full" type="submit">Reportar Auto Robado</ion-button>
-  </form>
-  <p>Reporta tu auto robado de forma rápida y fácil. Permite que otros te ayuden a encontrarlo.</p>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Reporta tu auto robado de forma rápida y fácil</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form (ngSubmit)="reportarAuto()">
+        <ion-item>
+          <ion-label position="floating">Patente</ion-label>
+          <ion-input [(ngModel)]="nuevoAuto.patente" name="patente" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Descripción</ion-label>
+          <ion-input [(ngModel)]="nuevoAuto.descripcion" name="descripcion" required></ion-input>
+        </ion-item>
+        <ion-button expand="full" type="submit">
+          <ion-icon slot="start" name="alert-circle-outline"></ion-icon>
+          Reportar Auto Robado
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+  <p class="orientation-text">Permite que otros te ayuden a encontrarlo.</p>
 </ion-content>

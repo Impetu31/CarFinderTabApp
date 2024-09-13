@@ -5,12 +5,24 @@
 </ion-header>
 
 <ion-content>
-  <div class="ion-text-center ion-padding">
-    <img src="assets/img/logo.jfif" alt="CarFinder Logo" width="200" height="200">
-    <h1>Bienvenido a CarFinder</h1>
-    <p>Reporta tu auto robado de forma rápida y fácil</p>
-<p>Ayuda a otros a recuperar sus vehículos mientras mantienes tu comunidad segura</p>
-    <ion-button expand="full" routerLink="/login">Inicia Sesión</ion-button>
-    <ion-button expand="full" routerLink="/registro">Regístrate</ion-button>
-  </div>
+  <ion-card class="home-card">
+    <ion-card-header>
+      <ion-img src="assets/img/logo.jfif" alt="CarFinder Logo" class="logo"></ion-img>
+      <ion-card-title>Bienvenido a CarFinder</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Reporta tu auto robado de forma rápida y fácil.</p>
+      <p>Ayuda a otros a recuperar sus vehículos mientras mantienes tu comunidad segura.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="full" routerLink="/login">
+    <ion-icon slot="start" name="log-in-outline"></ion-icon>
+    Inicia Sesión
+  </ion-button>
+
+  <ion-button expand="full" color="secondary" routerLink="/registro">
+    <ion-icon slot="start" name="person-add-outline"></ion-icon>
+    Regístrate
+  </ion-button>
 </ion-content>
