@@ -38,9 +38,19 @@
 
 // Estilos Globales para la App - Opción Suave
 // Estilos Globales para la App - Opción Vibrante
+/* Aplicar el fondo de imagen a todo el contenido */
+body, ion-app, ion-content {
+  background: url('/assets/img/fondo.jfif') no-repeat center center fixed;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+ion-content {
+  --background: transparent; /* Asegurarte de que el fondo no sea sobreescrito */
+}
+
+/* Estilos Globales que ya tienes */
 body {
-  --background: url('/assets/img/fondo.jfif') no-repeat center center fixed; /* Imagen de fondo */
-  --background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
   --ion-text-color: #FFFFFF; /* Texto blanco */
   --ion-color-primary: #0DCAF0; /* Azul neón para títulos */
   --ion-color-secondary: #FFC107; /* Amarillo neón para resaltar acciones */

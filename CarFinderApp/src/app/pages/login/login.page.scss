@@ -4,6 +4,7 @@
   align-items: center;
   height: 100vh;
   background-color: #000000;
+  padding: 20px;
 }
 
 .login-card {
@@ -11,14 +12,16 @@
   max-width: 400px; 
   background-color: #1a1a1a;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.8s ease;
+  position: relative;
 }
 
 ion-item {
-  --background: transparent;
+  --background: #2a2a2a;
   --border-radius: 8px;
+  --inner-padding-start: 12px;
   margin-bottom: 16px;
   color: #ffffff;
 }
@@ -31,9 +34,13 @@ ion-input {
   color: #ffffff;
 }
 
+ion-icon {
+  color: #4caf50;
+}
+
 ion-button {
   --border-radius: 20px;
-  --background: #007bff;
+  --background: linear-gradient(45deg, #007bff, #00a8ff);
   --color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -41,13 +48,24 @@ ion-button {
   width: 100%;
 }
 
+ion-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+ion-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .forgot-password {
   text-align: center;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .forgot-password ion-label a {
   color: #4caf50;
+  font-weight: bold;
 }
 
 @keyframes fadeIn {

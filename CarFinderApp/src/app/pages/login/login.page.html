@@ -11,11 +11,13 @@
   <div class="login-card">
     <form [formGroup]="loginForm" (ngSubmit)="login()">
       <ion-item>
+        <ion-icon slot="start" name="mail-outline"></ion-icon>
         <ion-label position="floating">Correo</ion-label>
         <ion-input formControlName="email" type="email"></ion-input>
       </ion-item>
 
       <ion-item>
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
         <ion-label position="floating">Contraseña</ion-label>
         <ion-input formControlName="password" type="password"></ion-input>
       </ion-item>
