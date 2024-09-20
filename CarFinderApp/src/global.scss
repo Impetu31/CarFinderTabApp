@@ -15,7 +15,7 @@
 /* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/typography.css"; 
 @import "@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
@@ -65,7 +65,7 @@ body {
   
   // Notificaciones en el perfil - Opción vibrante
   ion-card-content {
-    background-color: var(--ion-color-light); /* Fondo oscuro */
+    background-color: var(--ion-color-light); 
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
