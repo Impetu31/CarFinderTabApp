@@ -40,20 +40,20 @@ export class RegistroPage implements OnInit {
       return;
     }
 
-    const registrationSuccess = this.authService.register(email, username, password);
-
-    if (registrationSuccess) {
+    try {
+      // Usamos el servicio AuthService que está conectado con Firebase
+      await this.authService.register(email, password); // Username no es necesario para Firebase
       const alert = await this.alertController.create({
         header: 'Registro exitoso',
         message: 'Usuario registrado exitosamente.',
         buttons: ['OK']
       });
       await alert.present();
-      this.navCtrl.navigateRoot('/tabs/home'); 
-    } else {
+      this.navCtrl.navigateRoot('/tabs/home');
+    } catch (error) {
       const alert = await this.alertController.create({
         header: 'Error',
-        message: 'El correo ya está registrado.',
+        message: 'El correo ya está registrado o hay un error en el registro.',
         buttons: ['OK']
       });
       await alert.present();

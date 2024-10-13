@@ -27,18 +27,19 @@ export class LoginPage implements OnInit {
 
   async login() {
     const { email, password } = this.loginForm.value;
-    
-    const loginSuccess = this.authService.login(email, password);
 
-    if (loginSuccess) {
+    try {
+      // Usamos el servicio AuthService que está conectado con Firebase
+      await this.authService.login(email, password);
       const alert = await this.alertController.create({
         header: 'Login exitoso',
         message: 'Has iniciado sesión correctamente.',
         buttons: ['OK']
       });
       await alert.present();
-      this.navCtrl.navigateRoot('/tabs/tab1'); 
-    } else {
+      this.navCtrl.navigateRoot('/tabs/tab1');
+    } catch (error) {
+      // Si ocurre algún error, lo mostramos al usuario
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'Correo o contraseña incorrectos.',
