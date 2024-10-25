@@ -1,32 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AutoService } from 'src/services/auto.service';
 import { Auto } from 'src/models/auto.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: './tab3.page.html',
   styleUrls: ['./tab3.page.scss'],
 })
-export class Tab3Page implements OnInit {
+export class Tab3Page implements OnInit, OnDestroy {
   user: any;
   autosReportados: Auto[] = [];
+  autoSubscription: Subscription | undefined;
 
   constructor(private autoService: AutoService) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
     if (this.user && this.user.email) {
-      this.autosReportados = await this.autoService.getAutosByUser(this.user.email);
-      this.autoService.listenForAutoChanges(this.user.email, (autos) => {
-        this.autosReportados = autos; // Actualiza automáticamente
-      });
+      this.autoSubscription = this.autoService
+        .getAutosByUser(this.user.email)
+        .subscribe((autos) => {
+          // Filtra duplicados por ID
+          this.autosReportados = autos.filter(
+            (auto, index, self) =>
+              index === self.findIndex((t) => t.id === auto.id)
+          );
+        });
     }
   }
 
   async cambiarEstado(auto: Auto) {
     auto.status = 'recuperado';
     await this.autoService.updateAuto(auto);
-    await this.autoService.mostrarDialogo('Éxito', 'Estado del auto cambiado a "recuperado".');
+    await this.autoService.mostrarDialogo(
+      'Éxito',
+      'Estado del auto cambiado a "recuperado".'
+    );
   }
 
   cerrarSesion() {
@@ -37,6 +47,15 @@ export class Tab3Page implements OnInit {
   async eliminarAutos() {
     await this.autoService.deleteAllAutosByUser(this.user.email);
     this.autosReportados = [];
-    await this.autoService.mostrarDialogo('Éxito', 'Todos los autos reportados han sido eliminados.');
+    await this.autoService.mostrarDialogo(
+      'Éxito',
+      'Todos los autos reportados han sido eliminados.'
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.autoSubscription) {
+      this.autoSubscription.unsubscribe();
+    }
   }
 }

@@ -26,7 +26,7 @@ export class Tab1Page {
       this.nuevoAuto.userEmail = loggedInUser.email;
       this.nuevoAuto.id = this.autoService.generateAutoId();
 
-      const patenteNormalizada = this.nuevoAuto.patente.toUpperCase().replace(/[AEIOU]/g, '');
+      const patenteNormalizada = this.autoService.normalizarPatente(this.nuevoAuto.patente);
       const autoEncontrado = await this.autoService.searchAutoByPatente(patenteNormalizada);
 
       if (autoEncontrado) {

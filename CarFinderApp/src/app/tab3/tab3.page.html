@@ -1,39 +1,38 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Perfil</ion-title>
-    <ion-buttons slot="start">
+    <ion-buttons slot="end">
       <ion-button (click)="cerrarSesion()">Cerrar Sesión</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="autosReportados.length === 0">
-    <ion-card-header>
-      <ion-card-title>Bienvenido, {{ user.email }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>No has reportado autos.</ion-card-content>
-  </ion-card>
-
   <ion-card *ngFor="let auto of autosReportados">
     <ion-card-header>
-      <ion-card-title>Auto Reportado: {{ auto.patente }}</ion-card-title>
-      <p>Status: {{ auto.status }}</p>
+      <ion-card-title>{{ auto.descripcion }}</ion-card-title>
+      <ion-card-subtitle>Patente: {{ auto.patente }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <p>Descripción: {{ auto.descripcion }}</p>
-      <p *ngIf="auto.direccion">Visto en: {{ auto.direccion }}</p>
-      <ion-button *ngIf="auto.status === 'robado'" (click)="cambiarEstado(auto)">Marcar como Recuperado</ion-button>
-      <h3>Notificaciones:</h3>
-      <ion-list *ngIf="auto.notificaciones.length > 0">
-        <ion-item *ngFor="let notificacion of auto.notificaciones">
-          <p>{{ notificacion.mensaje }} - {{ notificacion.fecha | date:'short' }}</p>
-          <img *ngIf="notificacion.imagenBase64" [src]="notificacion.imagenBase64" />
-        </ion-item>
-      </ion-list>
-      <ion-label *ngIf="auto.notificaciones.length === 0">No hay notificaciones.</ion-label>
+      <ion-item *ngFor="let notificacion of auto.notificaciones">
+        <ion-label>
+          <h2>El auto fue visto en: {{ notificacion.mensaje }}</h2>
+          <p>Fecha: {{ notificacion.fecha | date: 'short' }}</p>
+        </ion-label>
+        <img
+          *ngIf="notificacion.imagenBase64"
+          [src]="notificacion.imagenBase64"
+          width="100"
+        />
+      </ion-item>
+
+      <ion-button expand="block" (click)="cambiarEstado(auto)">
+        Marcar como Recuperado
+      </ion-button>
     </ion-card-content>
   </ion-card>
 
-  <ion-button expand="full" (click)="eliminarAutos()">Eliminar todos los autos reportados</ion-button>
+  <ion-button expand="block" color="danger" (click)="eliminarAutos()">
+    Eliminar Todos los Autos
+  </ion-button>
 </ion-content>

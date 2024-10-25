@@ -11,12 +11,13 @@ export class Tab2Page {
   patente: string = '';
   direccion: string = '';
   autoEncontrado: Auto | null = null;
-  imagenBase64: string = '';  // Imagen seleccionada en base64
+  imagenBase64: string = '';
 
   constructor(private autoService: AutoService) {}
 
   async buscarAuto() {
-    const auto = await this.autoService.searchAutoByPatente(this.patente);
+    const patenteNormalizada = this.autoService.normalizarPatente(this.patente);
+    const auto = await this.autoService.searchAutoByPatente(patenteNormalizada);
 
     if (auto) {
       this.autoEncontrado = auto;
@@ -27,7 +28,7 @@ export class Tab2Page {
 
   async enviarNotificacion() {
     if (this.autoEncontrado) {
-      this.autoService.enviarNotificacion(this.autoEncontrado, this.direccion, this.imagenBase64);
+      await this.autoService.enviarNotificacion(this.autoEncontrado, this.direccion, this.imagenBase64);
       await this.autoService.mostrarDialogo('Éxito', 'Notificación enviada al dueño del auto.');
       this.limpiarFormulario();
     }
@@ -39,7 +40,7 @@ export class Tab2Page {
       const file = input.files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagenBase64 = reader.result as string;  // Guardar la imagen en base64
+        this.imagenBase64 = reader.result as string;
       };
       reader.readAsDataURL(file);
     }
