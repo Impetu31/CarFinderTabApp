@@ -12,7 +12,14 @@
     <ion-card-header>
       <ion-card-title>{{ auto.descripcion }}</ion-card-title>
       <ion-card-subtitle>Patente: {{ auto.patente }}</ion-card-subtitle>
+      <ion-badge color="warning" *ngIf="auto.status === 'robado'">
+        Robado
+      </ion-badge>
+      <ion-badge color="success" *ngIf="auto.status === 'recuperado'">
+        Recuperado
+      </ion-badge>
     </ion-card-header>
+
     <ion-card-content>
       <ion-item *ngFor="let notificacion of auto.notificaciones">
         <ion-label>
@@ -27,7 +34,7 @@
       </ion-item>
 
       <ion-button expand="block" (click)="cambiarEstado(auto)">
-        Marcar como Recuperado
+        Marcar como {{ auto.status === 'robado' ? 'Recuperado' : 'Robado' }}
       </ion-button>
     </ion-card-content>
   </ion-card>

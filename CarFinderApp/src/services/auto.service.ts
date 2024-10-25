@@ -59,12 +59,11 @@ export class AutoService {
     imagenBase64?: string
   ) {
     const notificacion: Notificacion = {
-      mensaje: direccion, // Elimina redundancia
+      mensaje: direccion,
       fecha: new Date(),
       imagenBase64,
     };
 
-    // Evita duplicación de notificaciones
     const existe = auto.notificaciones?.some(
       (n) =>
         n.mensaje === notificacion.mensaje &&

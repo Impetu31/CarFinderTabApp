@@ -21,7 +21,6 @@ export class Tab3Page implements OnInit, OnDestroy {
       this.autoSubscription = this.autoService
         .getAutosByUser(this.user.email)
         .subscribe((autos) => {
-          // Filtra duplicados por ID
           this.autosReportados = autos.filter(
             (auto, index, self) =>
               index === self.findIndex((t) => t.id === auto.id)
@@ -31,11 +30,11 @@ export class Tab3Page implements OnInit, OnDestroy {
   }
 
   async cambiarEstado(auto: Auto) {
-    auto.status = 'recuperado';
+    auto.status = auto.status === 'robado' ? 'recuperado' : 'robado';
     await this.autoService.updateAuto(auto);
     await this.autoService.mostrarDialogo(
       'Éxito',
-      'Estado del auto cambiado a "recuperado".'
+      `Estado del auto cambiado a "${auto.status}".`
     );
   }
 
