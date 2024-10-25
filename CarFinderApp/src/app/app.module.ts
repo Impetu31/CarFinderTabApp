@@ -3,14 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-// Firebase imports (en modo compatibilidad)
+// Firebase imports (compatibilidad)
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { environment } from '../environments/environment'; // Asegúrate de que la ruta es correcta
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database'; // Realtime Database
+import { environment } from '../environments/environment'; // Verifica la ruta del archivo environment
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,9 +18,10 @@ import { environment } from '../environments/environment'; // Asegúrate de que 
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    // Firebase modules
-    AngularFireModule.initializeApp(environment.firebaseConfig), // Inicializa Firebase con la configuración en modo compatibilidad
-    AngularFireAuthModule, // Módulo para Firebase Authentication en modo compatibilidad
+    // Inicialización de Firebase
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule, // Autenticación de Firebase
+    AngularFireDatabaseModule, // Módulo para Realtime Database
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

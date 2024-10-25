@@ -1,8 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
     <ion-title>Perfil</ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="cerrarSesion()">Cerrar Sesión</ion-button>
@@ -31,6 +28,7 @@
       <ion-list *ngIf="auto.notificaciones.length > 0">
         <ion-item *ngFor="let notificacion of auto.notificaciones">
           <p>{{ notificacion.mensaje }} - {{ notificacion.fecha | date:'short' }}</p>
+          <img *ngIf="notificacion.imagenBase64" [src]="notificacion.imagenBase64" />
         </ion-item>
       </ion-list>
       <ion-label *ngIf="auto.notificaciones.length === 0">No hay notificaciones.</ion-label>

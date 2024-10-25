@@ -11,6 +11,7 @@ export class Tab2Page {
   patente: string = '';
   direccion: string = '';
   autoEncontrado: Auto | null = null;
+  imagenBase64: string = '';  // Imagen seleccionada en base64
 
   constructor(private autoService: AutoService) {}
 
@@ -26,8 +27,9 @@ export class Tab2Page {
 
   async enviarNotificacion() {
     if (this.autoEncontrado) {
-      this.autoService.enviarNotificacion(this.autoEncontrado, this.direccion);
+      this.autoService.enviarNotificacion(this.autoEncontrado, this.direccion, this.imagenBase64);
       await this.autoService.mostrarDialogo('Éxito', 'Notificación enviada al dueño del auto.');
+      this.limpiarFormulario();
     }
   }
 
@@ -35,6 +37,18 @@ export class Tab2Page {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenBase64 = reader.result as string;  // Guardar la imagen en base64
+      };
+      reader.readAsDataURL(file);
     }
+  }
+
+  limpiarFormulario() {
+    this.patente = '';
+    this.direccion = '';
+    this.autoEncontrado = null;
+    this.imagenBase64 = '';
   }
 }

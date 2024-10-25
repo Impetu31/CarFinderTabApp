@@ -13,15 +13,20 @@ export class Tab3Page implements OnInit {
 
   constructor(private autoService: AutoService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-    this.autosReportados = this.autoService.getAutosByUser(this.user.email);
+    if (this.user && this.user.email) {
+      this.autosReportados = await this.autoService.getAutosByUser(this.user.email);
+      this.autoService.listenForAutoChanges(this.user.email, (autos) => {
+        this.autosReportados = autos; // Actualiza automáticamente
+      });
+    }
   }
 
-  cambiarEstado(auto: Auto) {
+  async cambiarEstado(auto: Auto) {
     auto.status = 'recuperado';
-    this.autoService.updateAuto(auto);
-    this.autoService.mostrarDialogo('Éxito', 'Estado del auto cambiado a "recuperado".');
+    await this.autoService.updateAuto(auto);
+    await this.autoService.mostrarDialogo('Éxito', 'Estado del auto cambiado a "recuperado".');
   }
 
   cerrarSesion() {
@@ -29,9 +34,9 @@ export class Tab3Page implements OnInit {
     window.location.href = '/home';
   }
 
-  eliminarAutos() {
-    this.autoService.deleteAllAutosByUser(this.user.email);
+  async eliminarAutos() {
+    await this.autoService.deleteAllAutosByUser(this.user.email);
     this.autosReportados = [];
-    this.autoService.mostrarDialogo('Éxito', 'Todos los autos reportados han sido eliminados.');
+    await this.autoService.mostrarDialogo('Éxito', 'Todos los autos reportados han sido eliminados.');
   }
 }

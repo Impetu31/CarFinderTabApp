@@ -8,9 +8,8 @@ import { Auto } from 'src/models/auto.model';
   styleUrls: ['./tab1.page.scss'],
 })
 export class Tab1Page {
-
   nuevoAuto: Auto = {
-    id: 0,
+    id: '',
     patente: '',
     descripcion: '',
     esPropietario: false,
@@ -19,17 +18,16 @@ export class Tab1Page {
     userEmail: '',
   };
 
-  constructor(private autoService: AutoService) { }
+  constructor(private autoService: AutoService) {}
 
   async reportarAuto() {
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if (loggedInUser) {
-      const user = JSON.parse(loggedInUser);
-      this.nuevoAuto.userEmail = user.email;
-      this.nuevoAuto.id = Date.now();
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+    if (loggedInUser && loggedInUser.email) {
+      this.nuevoAuto.userEmail = loggedInUser.email;
+      this.nuevoAuto.id = this.autoService.generateAutoId();
 
       const patenteNormalizada = this.nuevoAuto.patente.toUpperCase().replace(/[AEIOU]/g, '');
-      const autoEncontrado = await this.autoService.searchAutoByPatente(patenteNormalizada, false);
+      const autoEncontrado = await this.autoService.searchAutoByPatente(patenteNormalizada);
 
       if (autoEncontrado) {
         await this.autoService.mostrarDialogo('Error', 'Esta patente ya ha sido reportada.');
@@ -47,7 +45,7 @@ export class Tab1Page {
 
   limpiarFormulario() {
     this.nuevoAuto = {
-      id: 0,
+      id: '',
       patente: '',
       descripcion: '',
       esPropietario: false,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Notificacion } from 'src/models/auto.model';  // Correct import for Notificacion
+import { Notificacion } from 'src/models/auto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,38 +13,44 @@ export class AuthService {
     this.users = storedUsers ? JSON.parse(storedUsers) : [];
   }
 
-  // Register a new user with Firebase Authentication
-  async register(email: string, password: string): Promise<any> {
+  // Registrar un nuevo usuario con Firebase Authentication
+  async register(email: string, password: string): Promise<void> {
     try {
-      // Firebase Authentication para registrar un usuario
-      return await this.afAuth.createUserWithEmailAndPassword(email, password);
+      const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      const user = { email: userCredential.user?.email, notificaciones: [] };
+      this.users.push(user);
+      localStorage.setItem('users', JSON.stringify(this.users));
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
     } catch (error) {
       console.error('Error en el registro:', error);
       throw error;
     }
   }
 
-  // Login with Firebase Authentication
-  async login(email: string, password: string): Promise<any> {
+  // Iniciar sesión con Firebase Authentication
+  async login(email: string, password: string): Promise<void> {
     try {
-      return await this.afAuth.signInWithEmailAndPassword(email, password);
+      const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
+      const user = this.users.find((u) => u.email === email) || { email, notificaciones: [] };
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
     } catch (error) {
       console.error('Error en el login:', error);
       throw error;
     }
   }
 
-  // Logout from Firebase Authentication
+  // Cerrar sesión de Firebase y limpiar el localStorage
   async logout(): Promise<void> {
-    return this.afAuth.signOut();
+    await this.afAuth.signOut();
+    localStorage.removeItem('loggedInUser');
   }
 
-  // Get the currently logged-in user from Firebase Authentication
+  // Obtener el estado de autenticación actual desde Firebase
   getAuthState() {
     return this.afAuth.authState;
   }
 
-  // Add notification to a specific user (local storage functionality)
+  // Agregar una notificación al usuario especificado
   agregarNotificacion(userEmail: string, notificacion: Notificacion): void {
     const user = this.users.find((u) => u.email === userEmail);
 
@@ -54,7 +60,7 @@ export class AuthService {
     }
   }
 
-  // Update user data in localStorage (for storing notifications locally)
+  // Actualizar los datos del usuario en localStorage
   private updateUser(updatedUser: any): void {
     const userIndex = this.users.findIndex((u) => u.email === updatedUser.email);
 
@@ -64,19 +70,19 @@ export class AuthService {
     }
 
     const loggedInUser = this.getLoggedInUser();
-    if (loggedInUser.email === updatedUser.email) {
+    if (loggedInUser?.email === updatedUser.email) {
       localStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
     }
   }
 
-  // Get the currently logged-in user (local storage functionality)
+  // Obtener el usuario actualmente logueado desde localStorage
   getLoggedInUser(): any {
     return JSON.parse(localStorage.getItem('loggedInUser') || '{}');
   }
 
-  // Check if the user is authenticated using Firebase Authentication
-  isAuthenticated(): boolean {
-    const user = this.afAuth.authState;
-    return user ? true : false;
+  // Verificar si hay un usuario autenticado en Firebase
+  async isAuthenticated(): Promise<boolean> {
+    const user = await this.afAuth.currentUser;
+    return !!user;
   }
 }
