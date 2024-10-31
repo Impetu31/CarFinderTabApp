@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CarFinderApp</string>
+    <string name="title_activity_main">CarFinderApp</string>
+    <string name="package_name">com.carfinder.app</string>
+    <string name="custom_url_scheme">com.carfinder.app</string>
+</resources>

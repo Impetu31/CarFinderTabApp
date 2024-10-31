@@ -1,0 +1,6 @@
+<ion-button expand="block" (click)="takePicture()">
+  <ion-icon name="camera"></ion-icon>
+  Tomar Foto
+</ion-button>
+
+<ion-img *ngIf="imageBase64" [src]="imageBase64"></ion-img>

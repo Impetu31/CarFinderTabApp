@@ -19,14 +19,11 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-label>Dirección:</ion-label>
+        <ion-label position="floating">Dirección</ion-label>
         <ion-input [(ngModel)]="direccion"></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label>Foto:</ion-label>
-        <input type="file" (change)="onImageSelected($event)" />
-      </ion-item>
+      <app-image-uploader (imageSelected)="onImageSelected($event)"></app-image-uploader>
 
       <ion-button expand="block" (click)="enviarNotificacion()">Enviar Notificación</ion-button>
     </ion-card-content>

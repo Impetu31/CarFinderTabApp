@@ -7,8 +7,11 @@
 <ion-content>
   <ion-item>
     <ion-label position="floating">Patente</ion-label>
-    <ion-input [(ngModel)]="nuevoAuto.patente"></ion-input>
+    <ion-input [(ngModel)]="nuevoAuto.patente" maxlength="10"></ion-input>
   </ion-item>
+  <ion-text color="danger" *ngIf="patenteError">
+    La patente debe tener al menos 6 caracteres.
+  </ion-text>
 
   <ion-item>
     <ion-label position="floating">Descripción</ion-label>

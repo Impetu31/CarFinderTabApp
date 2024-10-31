@@ -22,28 +22,30 @@ export class Tab2Page {
     if (auto) {
       this.autoEncontrado = auto;
     } else {
-      await this.autoService.mostrarDialogo('Error', 'No se encontró ningún auto con la patente: ' + this.patente);
+      await this.autoService.mostrarDialogo(
+        'Error',
+        'No se encontró ningún auto con la patente: ' + this.patente
+      );
     }
   }
 
   async enviarNotificacion() {
     if (this.autoEncontrado) {
-      await this.autoService.enviarNotificacion(this.autoEncontrado, this.direccion, this.imagenBase64);
-      await this.autoService.mostrarDialogo('Éxito', 'Notificación enviada al dueño del auto.');
+      await this.autoService.enviarNotificacion(
+        this.autoEncontrado,
+        this.direccion,
+        this.imagenBase64
+      );
+      await this.autoService.mostrarDialogo(
+        'Éxito',
+        'Notificación enviada al dueño del auto.'
+      );
       this.limpiarFormulario();
     }
   }
 
-  onImageSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagenBase64 = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-    }
+  onImageSelected(base64Image: string | undefined) {
+    this.imagenBase64 = base64Image || ''; // Asigna '' si la imagen es undefined
   }
 
   limpiarFormulario() {

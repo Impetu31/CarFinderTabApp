@@ -3,13 +3,12 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #000000;
     padding: 20px;
   }
-  
+
   .registro-card {
-    width: 100%; 
-    max-width: 400px; 
+    width: 100%;
+    max-width: 400px;
     background-color: #1a1a1a;
     padding: 20px;
     border-radius: 16px;
@@ -17,7 +16,7 @@
     animation: fadeIn 0.8s ease;
     position: relative;
   }
-  
+
   ion-item {
     --background: #2a2a2a;
     --border-radius: 8px;
@@ -25,19 +24,19 @@
     margin-bottom: 16px;
     color: #ffffff;
   }
-  
+
   ion-label {
     color: #ffffff;
   }
-  
+
   ion-input {
     color: #ffffff;
   }
-  
+
   ion-icon {
     color: #4caf50;
   }
-  
+
   ion-button {
     --border-radius: 20px;
     --background: linear-gradient(45deg, #007bff, #00a8ff);
@@ -47,17 +46,17 @@
     margin-top: 16px;
     width: 100%;
   }
-  
+
   ion-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
   }
-  
+
   ion-button:active {
     transform: translateY(1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -68,4 +67,3 @@
       transform: scale(1);
     }
   }
-  

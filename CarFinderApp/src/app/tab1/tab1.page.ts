@@ -17,10 +17,19 @@ export class Tab1Page {
     notificaciones: [],
     userEmail: '',
   };
+  patenteError: boolean = false;
 
   constructor(private autoService: AutoService) {}
 
   async reportarAuto() {
+    // Validación de patente
+    if (this.nuevoAuto.patente.length < 6) {
+      this.patenteError = true;
+      return;
+    } else {
+      this.patenteError = false;
+    }
+
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
     if (loggedInUser && loggedInUser.email) {
       this.nuevoAuto.userEmail = loggedInUser.email;
