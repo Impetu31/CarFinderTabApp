@@ -8,6 +8,16 @@
 </ion-header>
 
 <ion-content>
+  <!-- Párrafo de experiencia del usuario -->
+  <ion-card>
+    <ion-card-content>
+      <p>
+        Aquí puedes ver tus reportes de autos robados y las notificaciones enviadas por colaboradores, incluyendo la ubicación y fotos que ayudarán a recuperar tu vehículo.
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Lista de autos reportados -->
   <ion-card *ngFor="let auto of autosReportados">
     <ion-card-header>
       <ion-card-title>{{ auto.descripcion }}</ion-card-title>

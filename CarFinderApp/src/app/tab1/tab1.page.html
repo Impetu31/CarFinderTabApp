@@ -5,6 +5,16 @@
 </ion-header>
 
 <ion-content>
+  <!-- Párrafo de experiencia del usuario -->
+  <ion-card>
+    <ion-card-content>
+      <p>
+        ¿Tu auto ha sido robado? En esta página puedes reportarlo para que otros usuarios puedan ayudarte a localizarlo. Completa la patente y una descripción del vehículo para que sea más fácil identificarlo.
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Formulario para reportar auto -->
   <ion-item>
     <ion-label position="floating">Patente</ion-label>
     <ion-input [(ngModel)]="nuevoAuto.patente" maxlength="10"></ion-input>
