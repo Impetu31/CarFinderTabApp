@@ -2,7 +2,9 @@
   "name": "CarFinderApp",
   "version": "0.0.1",
   "author": "Ionic Framework",
+  "description": "An Ionic project",
   "homepage": "https://ionicframework.com/",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,7 +13,6 @@
     "test": "ng test",
     "lint": "ng lint"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^18.0.0",
     "@angular/common": "^18.2.9",
@@ -29,6 +30,7 @@
     "@capacitor/haptics": "6.0.1",
     "@capacitor/keyboard": "6.0.2",
     "@capacitor/status-bar": "6.0.1",
+    "@capacitor-community/admob": "^5.1.0",
     "@ionic/angular": "^8.0.0",
     "firebase": "^9.6.11",
     "ionicons": "^7.0.0",
@@ -63,6 +65,5 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.0"
-  },
-  "description": "An Ionic project"
+  }
 }

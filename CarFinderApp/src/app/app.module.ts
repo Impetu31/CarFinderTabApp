@@ -10,7 +10,10 @@ import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database'; // Realtime Database
-import { environment } from '../environments/environment'; // Verifica la ruta del archivo environment
+import { environment } from '../environments/environment';
+
+// ✅ AdMob plugin (NO se necesita inyectar, solo asegurarse de instalarlo con npm)
+import { AdMob } from '@capacitor-community/admob';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,12 +21,13 @@ import { environment } from '../environments/environment'; // Verifica la ruta d
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    // Inicialización de Firebase
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule, // Autenticación de Firebase
-    AngularFireDatabaseModule, // Módulo para Realtime Database
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
