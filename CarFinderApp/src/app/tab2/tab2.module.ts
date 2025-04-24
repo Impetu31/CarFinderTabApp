@@ -5,18 +5,18 @@ import { IonicModule } from '@ionic/angular';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { Tab2Page } from './tab2.page';
-import { ImageUploaderComponent } from 'src/app/components/image-uploader/image-uploader.component'; // Importamos el componente
+import { ImageUploaderComponent } from 'src/app/components/image-uploader/image-uploader.component';
 
 @NgModule({
+  declarations: [
+    Tab2Page,
+    ImageUploaderComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     Tab2PageRoutingModule
-  ],
-  declarations: [
-    Tab2Page,
-    ImageUploaderComponent // Declaramos el componente aquí
   ]
 })
 export class Tab2PageModule {}

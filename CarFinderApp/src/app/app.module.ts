@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -6,14 +6,10 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-// Firebase imports (compatibilidad)
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database'; // Realtime Database
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
-
-// ✅ AdMob plugin (NO se necesita inyectar, solo asegurarse de instalarlo con npm)
-import { AdMob } from '@capacitor-community/admob';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,5 +25,6 @@ import { AdMob } from '@capacitor-community/admob';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] // ✅ para que reconozca web components como <ion-...>
 })
 export class AppModule {}
