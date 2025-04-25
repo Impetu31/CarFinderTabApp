@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <!-- Párrafo de experiencia del usuario -->
+  <!-- Mensaje de bienvenida y orientación -->
   <ion-card>
     <ion-card-content>
       <p>
@@ -22,25 +22,19 @@
     <ion-card-header>
       <ion-card-title>{{ auto.descripcion }}</ion-card-title>
       <ion-card-subtitle>Patente: {{ auto.patente }}</ion-card-subtitle>
-      <ion-badge color="warning" *ngIf="auto.status === 'robado'">
-        Robado
-      </ion-badge>
-      <ion-badge color="success" *ngIf="auto.status === 'recuperado'">
-        Recuperado
-      </ion-badge>
+      <ion-badge color="warning" *ngIf="auto.status === 'robado'">Robado</ion-badge>
+      <ion-badge color="success" *ngIf="auto.status === 'recuperado'">Recuperado</ion-badge>
     </ion-card-header>
 
     <ion-card-content>
+      <!-- Notificaciones del colaborador -->
       <ion-item *ngFor="let notificacion of auto.notificaciones">
         <ion-label>
-          <h2>El auto fue visto en: {{ notificacion.mensaje }}</h2>
+          <h2>Visto en: {{ notificacion.mensaje }}</h2>
           <p>Fecha: {{ notificacion.fecha | date: 'short' }}</p>
         </ion-label>
-        <img
-          *ngIf="notificacion.imagenBase64"
-          [src]="notificacion.imagenBase64"
-          width="100"
-        />
+        <img *ngIf="notificacion.imagenBase64" [src]="notificacion.imagenBase64" width="100" />
+        <ion-button fill="clear" (click)="abrirEnGoogleMaps(notificacion.mensaje)">Ver en Google Maps</ion-button>
       </ion-item>
 
       <ion-button expand="block" (click)="cambiarEstado(auto)">

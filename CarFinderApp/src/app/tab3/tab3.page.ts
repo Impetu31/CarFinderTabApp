@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AutoService } from 'src/services/auto.service';
 import { Auto } from 'src/models/auto.model';
 import { Subscription } from 'rxjs';
+import { AdMob } from '@capacitor-community/admob';
 
 @Component({
   selector: 'app-tab3',
@@ -12,8 +13,11 @@ export class Tab3Page implements OnInit, OnDestroy {
   user: any;
   autosReportados: Auto[] = [];
   autoSubscription: Subscription | undefined;
+  interstitialShown: boolean = false;
 
-  constructor(private autoService: AutoService) {}
+  constructor(private autoService: AutoService) {
+    this.mostrarAnuncioInterstitial();
+  }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
@@ -27,6 +31,27 @@ export class Tab3Page implements OnInit, OnDestroy {
           );
         });
     }
+  }
+
+  async mostrarAnuncioInterstitial() {
+    if (this.interstitialShown) return;
+    this.interstitialShown = true;
+
+    try {
+      await AdMob.prepareInterstitial({
+        adId: 'ca-app-pub-3940256099942544/1033173712',
+        isTesting: true,
+      });
+      await AdMob.showInterstitial();
+    } catch (error) {
+      console.warn('Error mostrando interstitial en Tab3:', error);
+    }
+  }
+
+  abrirEnGoogleMaps(direccion: string) {
+    const query = encodeURIComponent(direccion);
+    const url = `https://www.google.com/maps/search/?api=1&query=${query}`;
+    window.open(url, '_blank');
   }
 
   async cambiarEstado(auto: Auto) {
