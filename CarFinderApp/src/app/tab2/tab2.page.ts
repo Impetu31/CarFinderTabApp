@@ -45,7 +45,7 @@ export class Tab2Page {
   }
 
   onImageSelected(base64Image: string | undefined) {
-    this.imagenBase64 = base64Image || ''; // Asigna '' si la imagen es undefined
+    this.imagenBase64 = base64Image || '';
   }
 
   limpiarFormulario() {

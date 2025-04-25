@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AdMob } from '@capacitor-community/admob';
 
 @Component({
   selector: 'app-tabs',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
-
-  constructor() {}
-
+  constructor() {
+    AdMob.hideBanner(); // 👈 También aquí por precaución
+  }
 }

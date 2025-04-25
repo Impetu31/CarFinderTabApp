@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AutoService } from 'src/services/auto.service';
 import { Auto } from 'src/models/auto.model';
+import { AdMob } from '@capacitor-community/admob';
 
 @Component({
   selector: 'app-tab1',
@@ -18,11 +19,32 @@ export class Tab1Page {
     userEmail: '',
   };
   patenteError: boolean = false;
+  interstitialShown: boolean = false;
 
-  constructor(private autoService: AutoService) {}
+  constructor(private autoService: AutoService) {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+    if (loggedInUser && loggedInUser.email) {
+      this.mostrarAnuncioInterstitial();
+    }
+  }
+
+  async mostrarAnuncioInterstitial() {
+    if (this.interstitialShown) return;
+    this.interstitialShown = true;
+
+    try {
+      await AdMob.prepareInterstitial({
+        adId: 'ca-app-pub-3940256099942544/1033173712', // ID oficial de prueba de Google
+        isTesting: true,
+      });
+
+      await AdMob.showInterstitial();
+    } catch (error) {
+      console.warn('Error mostrando interstitial:', error);
+    }
+  }
 
   async reportarAuto() {
-    // Validación de patente
     if (this.nuevoAuto.patente.length < 6) {
       this.patenteError = true;
       return;
