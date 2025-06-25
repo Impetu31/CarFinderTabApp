@@ -12,21 +12,35 @@ body, ion-app {
   background: url('/assets/img/fondo.webp') no-repeat center center fixed;
   background-size: cover;
   background-attachment: fixed;
-  --ion-text-color: #FFFFFF; /* Texto blanco para todo el contenido */
+  --ion-text-color: #FFFFFF;
 }
 
+/* Garantiza que ion-content tenga fondo transparente */
 ion-content {
-  --background: transparent; /* Hace que el contenido respete el fondo de body */
+  --background: transparent;
+}
+
+/* CENTRADO FIJO para login y registro */
+ion-content.login-content,
+ion-content.registro-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 /* Colores personalizados */
 :root {
-  --input-background-color: rgba(52, 58, 64, 0.8); /* Fondo oscuro semitransparente para los campos */
-  --input-text-color: #FFFFFF; /* Texto blanco para los campos */
-  --input-placeholder-color: #B0B0B0; /* Color gris claro para el texto de marcador */
+  --input-background-color: rgba(52, 58, 64, 0.8);
+  --input-text-color: #FFFFFF;
+  --input-placeholder-color: #B0B0B0;
 }
 
-/* Estilo para los elementos de formulario */
+/* Estilo para campos */
 ion-item {
   --background: var(--input-background-color);
   --color: var(--input-text-color);
@@ -35,15 +49,15 @@ ion-item {
 }
 
 ion-label {
-  color: var(--input-text-color); /* Texto blanco */
+  color: var(--input-text-color);
 }
 
 ion-input::part(native) {
-  color: var(--input-text-color); /* Color del texto ingresado */
+  color: var(--input-text-color);
   background-color: var(--input-background-color);
   padding: 12px;
   border-radius: 8px;
-  --placeholder-color: var(--input-placeholder-color); /* Color del marcador */
+  --placeholder-color: var(--input-placeholder-color);
 }
 
 /* Botones */
@@ -61,8 +75,8 @@ ion-button:hover {
 
 /* Estilos de alertas */
 ion-alert {
-  --background: #333333; /* Fondo oscuro para el alerta */
-  --color: #FFFFFF; /* Texto blanco en el alerta */
+  --background: #333333;
+  --color: #FFFFFF;
 }
 
 ion-alert .alert-title {
@@ -74,14 +88,14 @@ ion-alert .alert-message {
   color: #b97272;
 }
 
-/* Fondo y colores para la barra de tabs */
+/* Barra de tabs */
 ion-tab-bar {
-  --background: #333; /* Fondo oscuro para la barra de tabs */
-  --color: #8a8a8a; /* Color de los iconos y texto inactivo */
-  --color-selected: #0DCAF0; /* Color de los iconos y texto cuando están seleccionados */
+  --background: #333;
+  --color: #8a8a8a;
+  --color-selected: #0DCAF0;
 }
 
 ion-tab-button {
-  --color: #8a8a8a; /* Color del texto inactivo */
-  --color-selected: #0DCAF0; /* Color del texto cuando está seleccionado */
+  --color: #8a8a8a;
+  --color-selected: #0DCAF0;
 }

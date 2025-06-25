@@ -8,41 +8,71 @@
 </ion-header>
 
 <ion-content>
-  <!-- Mensaje de bienvenida y orientación -->
-  <ion-card>
+
+  <!-- Bienvenida -->
+  <ion-card *ngIf="user?.email">
     <ion-card-content>
+      <h2 style="margin-bottom: 0.5rem;">
+        👋 Bienvenido, <strong>{{ user.username || 'Usuario' }}</strong> ({{ user.email }})
+      </h2>
       <p>
-        Aquí puedes ver tus reportes de autos robados y las notificaciones enviadas por colaboradores, incluyendo la ubicación y fotos que ayudarán a recuperar tu vehículo.
+        Aquí puedes ver tus reportes de autos robados y las notificaciones enviadas por colaboradores.
       </p>
     </ion-card-content>
   </ion-card>
 
   <!-- Lista de autos reportados -->
-  <ion-card *ngFor="let auto of autosReportados">
+  <ion-card *ngFor="let auto of autosReportados" [ngClass]="auto.status === 'robado' ? 'card-robado' : 'card-recuperado'">
     <ion-card-header>
-      <ion-card-title>{{ auto.descripcion }}</ion-card-title>
-      <ion-card-subtitle>Patente: {{ auto.patente }}</ion-card-subtitle>
+      <ion-card-title>{{ auto.patente }}</ion-card-title>
       <ion-badge color="warning" *ngIf="auto.status === 'robado'">Robado</ion-badge>
       <ion-badge color="success" *ngIf="auto.status === 'recuperado'">Recuperado</ion-badge>
     </ion-card-header>
 
     <ion-card-content>
-      <!-- Notificaciones del colaborador -->
-      <ion-item *ngFor="let notificacion of auto.notificaciones">
+      <!-- Datos del vehículo -->
+      <ion-item lines="none">
         <ion-label>
-          <h2>Visto en: {{ notificacion.mensaje }}</h2>
-          <p>Fecha: {{ notificacion.fecha | date: 'short' }}</p>
+          <p><strong>Marca:</strong> {{ auto.marca }}</p>
+          <p><strong>Modelo:</strong> {{ auto.modelo }}</p>
+          <p><strong>Color:</strong> {{ auto.color }}</p>
+          <p><strong>Año:</strong> {{ auto.anio }}</p>
         </ion-label>
-        <img *ngIf="notificacion.imagenBase64" [src]="notificacion.imagenBase64" width="100" />
-        <ion-button fill="clear" (click)="abrirEnGoogleMaps(notificacion.mensaje)">Ver en Google Maps</ion-button>
       </ion-item>
 
-      <ion-button expand="block" (click)="cambiarEstado(auto)">
+      <!-- Título para las notificaciones -->
+      <ion-text color="medium" *ngIf="auto.notificaciones?.length">
+        <h3 style="margin-top: 1rem;">🔔 Notificaciones</h3>
+      </ion-text>
+
+      <!-- Lista de notificaciones -->
+      <ion-card *ngFor="let notificacion of auto.notificaciones" color="light" class="notificacion-card">
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="8">
+                <p><strong>Visto en:</strong> {{ notificacion.mensaje }}</p>
+                <p><strong>Fecha:</strong> {{ notificacion.fecha | date: 'short' }}</p>
+                <ion-button fill="outline" size="small" (click)="abrirEnGoogleMaps(notificacion.mensaje)">
+                  Ver en Google Maps
+                </ion-button>
+              </ion-col>
+              <ion-col size="4" class="ion-text-center">
+                <img *ngIf="notificacion.imagenBase64" [src]="notificacion.imagenBase64" width="100" />
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Botón cambiar estado -->
+      <ion-button expand="block" color="primary" (click)="cambiarEstado(auto)" style="margin-top: 10px;">
         Marcar como {{ auto.status === 'robado' ? 'Recuperado' : 'Robado' }}
       </ion-button>
     </ion-card-content>
   </ion-card>
 
+  <!-- Eliminar todo -->
   <ion-button expand="block" color="danger" (click)="eliminarAutos()">
     Eliminar Todos los Autos
   </ion-button>

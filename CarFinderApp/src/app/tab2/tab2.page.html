@@ -9,7 +9,7 @@
   <ion-card>
     <ion-card-content>
       <p>
-        ¿Has visto un auto sospechoso? Aquí puedes buscar su patente y verificar si ya ha sido reportado como robado. Si encuentras un reporte, podrás enviar información adicional, como la ubicación y una foto, para ayudar al dueño a recuperarlo.
+        ¿Has visto un auto sospechoso? Aquí puedes buscar su patente y verificar si ya ha sido reportado como robado. Si encuentras un reporte, podrás enviar información adicional, como la ubicación, una foto y el estado del vehículo.
       </p>
     </ion-card-content>
   </ion-card>
@@ -22,17 +22,30 @@
 
   <ion-button expand="block" (click)="buscarAuto()">Buscar</ion-button>
 
+  <!-- Mostrar datos del auto si fue encontrado -->
   <ion-card *ngIf="autoEncontrado">
     <ion-card-header>
       <ion-card-title>{{ autoEncontrado.descripcion }}</ion-card-title>
       <ion-card-subtitle>Patente: {{ autoEncontrado.patente }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
+
+      <!-- Dirección -->
       <ion-item>
         <ion-label position="floating">Dirección</ion-label>
         <ion-input [(ngModel)]="direccion"></ion-input>
       </ion-item>
 
+      <!-- Estado observado -->
+      <ion-item>
+        <ion-label position="floating">Estado observado</ion-label>
+        <ion-select [(ngModel)]="estadoObservado">
+          <ion-select-option value="En movimiento">En movimiento</ion-select-option>
+          <ion-select-option value="Abandonado">Abandonado</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Imagen -->
       <app-image-uploader (imageSelected)="onImageSelected($event)"></app-image-uploader>
 
       <ion-button expand="block" (click)="enviarNotificacion()">Enviar Notificación</ion-button>

@@ -11,6 +11,7 @@ import { AdMob } from '@capacitor-community/admob';
 export class Tab2Page {
   patente: string = '';
   direccion: string = '';
+  estadoObservado: string = '';
   autoEncontrado: Auto | null = null;
   imagenBase64: string = '';
   interstitialShown: boolean = false;
@@ -40,9 +41,16 @@ export class Tab2Page {
 
     if (auto) {
       this.autoEncontrado = auto;
+
+      if (auto.status === 'robado') {
+        await this.autoService.mostrarDialogo(
+          'Auto robado encontrado',
+          '🚨 Has encontrado una patente reportada por robo. Por favor brinda ubicación, estado observado y una foto para ayudar al dueño a recuperarlo.'
+        );
+      }
     } else {
       await this.autoService.mostrarDialogo(
-        'Error',
+        'No encontrado',
         'No se encontró ningún auto con la patente: ' + this.patente
       );
     }
@@ -50,9 +58,10 @@ export class Tab2Page {
 
   async enviarNotificacion() {
     if (this.autoEncontrado) {
+      const mensajeCompleto = `${this.direccion} - Estado: ${this.estadoObservado}`;
       await this.autoService.enviarNotificacion(
         this.autoEncontrado,
-        this.direccion,
+        mensajeCompleto,
         this.imagenBase64
       );
       await this.autoService.mostrarDialogo(
@@ -70,6 +79,7 @@ export class Tab2Page {
   limpiarFormulario() {
     this.patente = '';
     this.direccion = '';
+    this.estadoObservado = '';
     this.autoEncontrado = null;
     this.imagenBase64 = '';
   }

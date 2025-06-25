@@ -17,8 +17,14 @@ export class Tab1Page {
     status: 'robado',
     notificaciones: [],
     userEmail: '',
+    anio: 0,
+    color: '',
+    marca: '',
+    modelo: ''
   };
+
   patenteError: boolean = false;
+  camposIncompletos: boolean = false;
   interstitialShown: boolean = false;
 
   constructor(private autoService: AutoService) {
@@ -34,7 +40,7 @@ export class Tab1Page {
 
     try {
       await AdMob.prepareInterstitial({
-        adId: 'ca-app-pub-3940256099942544/1033173712', // ID oficial de prueba de Google
+        adId: 'ca-app-pub-3940256099942544/1033173712',
         isTesting: true,
       });
 
@@ -45,11 +51,24 @@ export class Tab1Page {
   }
 
   async reportarAuto() {
+    this.patenteError = false;
+    this.camposIncompletos = false;
+
     if (this.nuevoAuto.patente.length < 6) {
       this.patenteError = true;
       return;
-    } else {
-      this.patenteError = false;
+    }
+
+    if (
+      !this.nuevoAuto.descripcion ||
+      !this.nuevoAuto.marca ||
+      !this.nuevoAuto.modelo ||
+      !this.nuevoAuto.color ||
+      !this.nuevoAuto.anio ||
+      this.nuevoAuto.anio < 1900
+    ) {
+      this.camposIncompletos = true;
+      return;
     }
 
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
@@ -83,6 +102,10 @@ export class Tab1Page {
       status: 'robado',
       notificaciones: [],
       userEmail: '',
+      anio: 0,
+      color: '',
+      marca: '',
+      modelo: ''
     };
   }
 }

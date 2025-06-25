@@ -1,0 +1,61 @@
+ion-card {
+  border-radius: 14px;
+  margin: 16px;
+  animation: fadeIn 0.5s ease;
+  background-color: rgba(20, 20, 20, 0.9); /* fondo oscuro más legible */
+  color: #ffffff;
+}
+
+.card-robado {
+  border-left: 6px solid #ff3b30;
+}
+
+.card-recuperado {
+  border-left: 6px solid #30d158;
+}
+
+.notificacion-card {
+  border-radius: 10px;
+  margin-top: 10px;
+  background-color: rgba(40, 40, 40, 0.85);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+ion-card-title,
+ion-card-subtitle,
+ion-text,
+ion-label p {
+  color: #ffffff;
+}
+
+ion-item {
+  --background: rgba(60, 60, 60, 0.8);
+  --color: #ffffff;
+  border-radius: 12px;
+  margin-top: 10px;
+  padding: 12px;
+}
+
+img {
+  object-fit: cover;
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+  margin-top: 6px;
+}
+
+ion-button {
+  margin-top: 12px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
