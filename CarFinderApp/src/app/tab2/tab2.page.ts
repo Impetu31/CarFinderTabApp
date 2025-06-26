@@ -15,6 +15,7 @@ export class Tab2Page {
   autoEncontrado: Auto | null = null;
   imagenBase64: string = '';
   interstitialShown: boolean = false;
+  mostrarFormulario: boolean = false;
 
   constructor(private autoService: AutoService) {
     this.mostrarAnuncioInterstitial();
@@ -36,24 +37,35 @@ export class Tab2Page {
   }
 
   async buscarAuto() {
+    this.autoEncontrado = null;
+    this.mostrarFormulario = false;
+
     const patenteNormalizada = this.autoService.normalizarPatente(this.patente);
     const auto = await this.autoService.searchAutoByPatente(patenteNormalizada);
 
-    if (auto) {
-      this.autoEncontrado = auto;
-
-      if (auto.status === 'robado') {
-        await this.autoService.mostrarDialogo(
-          'Auto robado encontrado',
-          '🚨 Has encontrado una patente reportada por robo. Por favor brinda ubicación, estado observado y una foto para ayudar al dueño a recuperarlo.'
-        );
-      }
-    } else {
+    if (!auto) {
       await this.autoService.mostrarDialogo(
         'No encontrado',
-        'No se encontró ningún auto con la patente: ' + this.patente
+        `No se encontró ningún auto con la patente: ${this.patente}`
       );
+      return;
     }
+
+    if (auto.status === 'recuperado') {
+      await this.autoService.mostrarDialogo(
+        'Auto Recuperado',
+        'Este vehículo ya fue recuperado. No es necesario enviar una nueva notificación.'
+      );
+      return;
+    }
+
+    this.autoEncontrado = auto;
+    this.mostrarFormulario = true;
+
+    await this.autoService.mostrarDialogo(
+      'Auto robado encontrado',
+      '🚨 Has encontrado una patente reportada por robo. Por favor brinda ubicación, estado observado y una foto para ayudar al dueño a recuperarlo.'
+    );
   }
 
   async enviarNotificacion() {
@@ -82,5 +94,6 @@ export class Tab2Page {
     this.estadoObservado = '';
     this.autoEncontrado = null;
     this.imagenBase64 = '';
+    this.mostrarFormulario = false;
   }
 }

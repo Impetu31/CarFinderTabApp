@@ -23,13 +23,13 @@ export class Tab1Page {
     modelo: ''
   };
 
-  patenteError: boolean = false;
-  camposIncompletos: boolean = false;
-  interstitialShown: boolean = false;
+  patenteError = false;
+  camposIncompletos = false;
+  interstitialShown = false;
 
   constructor(private autoService: AutoService) {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-    if (loggedInUser && loggedInUser.email) {
+    if (loggedInUser?.email) {
       this.mostrarAnuncioInterstitial();
     }
   }
@@ -37,13 +37,11 @@ export class Tab1Page {
   async mostrarAnuncioInterstitial() {
     if (this.interstitialShown) return;
     this.interstitialShown = true;
-
     try {
       await AdMob.prepareInterstitial({
         adId: 'ca-app-pub-3940256099942544/1033173712',
         isTesting: true,
       });
-
       await AdMob.showInterstitial();
     } catch (error) {
       console.warn('Error mostrando interstitial:', error);
@@ -59,37 +57,32 @@ export class Tab1Page {
       return;
     }
 
-    if (
-      !this.nuevoAuto.descripcion ||
-      !this.nuevoAuto.marca ||
-      !this.nuevoAuto.modelo ||
-      !this.nuevoAuto.color ||
-      !this.nuevoAuto.anio ||
-      this.nuevoAuto.anio < 1900
-    ) {
+    const { descripcion, marca, modelo, color, anio } = this.nuevoAuto;
+    if (!descripcion || !marca || !modelo || !color || anio < 1900) {
       this.camposIncompletos = true;
       return;
     }
 
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
-    if (loggedInUser && loggedInUser.email) {
-      this.nuevoAuto.userEmail = loggedInUser.email;
-      this.nuevoAuto.id = this.autoService.generateAutoId();
-
-      const patenteNormalizada = this.autoService.normalizarPatente(this.nuevoAuto.patente);
-      const autoEncontrado = await this.autoService.searchAutoByPatente(patenteNormalizada);
-
-      if (autoEncontrado) {
-        await this.autoService.mostrarDialogo('Error', 'Esta patente ya ha sido reportada.');
-      } else {
-        const agregadoExitoso = await this.autoService.addAuto(this.nuevoAuto);
-        if (agregadoExitoso) {
-          await this.autoService.mostrarDialogo('Éxito', 'Auto reportado exitosamente.');
-          this.limpiarFormulario();
-        }
-      }
-    } else {
+    if (!loggedInUser?.email) {
       await this.autoService.mostrarDialogo('Error', 'Debes estar logueado para reportar un auto.');
+      return;
+    }
+
+    this.nuevoAuto.userEmail = loggedInUser.email;
+    const patenteNormalizada = this.autoService.normalizarPatente(this.nuevoAuto.patente);
+    this.nuevoAuto.patente = patenteNormalizada;
+
+    const existente = await this.autoService.searchAutoByPatente(patenteNormalizada);
+    if (existente) {
+      await this.autoService.mostrarDialogo('Error', 'Esta patente ya ha sido reportada.');
+      return;
+    }
+
+    const success = await this.autoService.addAuto(this.nuevoAuto);
+    if (success) {
+      await this.autoService.mostrarDialogo('Éxito', 'Auto reportado exitosamente.');
+      this.limpiarFormulario();
     }
   }
 

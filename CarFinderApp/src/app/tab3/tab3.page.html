@@ -8,7 +8,6 @@
 </ion-header>
 
 <ion-content>
-
   <!-- Bienvenida -->
   <ion-card *ngIf="user?.email">
     <ion-card-content>
@@ -40,12 +39,11 @@
         </ion-label>
       </ion-item>
 
-      <!-- Título para las notificaciones -->
+      <!-- Notificaciones -->
       <ion-text color="medium" *ngIf="auto.notificaciones?.length">
         <h3 style="margin-top: 1rem;">🔔 Notificaciones</h3>
       </ion-text>
 
-      <!-- Lista de notificaciones -->
       <ion-card *ngFor="let notificacion of auto.notificaciones" color="light" class="notificacion-card">
         <ion-card-content>
           <ion-grid>
@@ -65,14 +63,18 @@
         </ion-card-content>
       </ion-card>
 
-      <!-- Botón cambiar estado -->
-      <ion-button expand="block" color="primary" (click)="cambiarEstado(auto)" style="margin-top: 10px;">
+      <!-- Botones -->
+      <ion-button expand="block" color="primary" (click)="cambiarEstado(auto)">
         Marcar como {{ auto.status === 'robado' ? 'Recuperado' : 'Robado' }}
+      </ion-button>
+
+      <ion-button expand="block" color="danger" fill="outline" (click)="eliminarAuto(auto)">
+        Eliminar este reporte
       </ion-button>
     </ion-card-content>
   </ion-card>
 
-  <!-- Eliminar todo -->
+  <!-- Eliminar todos -->
   <ion-button expand="block" color="danger" (click)="eliminarAutos()">
     Eliminar Todos los Autos
   </ion-button>
